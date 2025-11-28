@@ -32,7 +32,6 @@
       display: flex;
       align-items: center;
       background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
-      position: relative;
     }
     .glow-text {
       font-size: clamp(3rem, 8vw, 6rem);
@@ -85,7 +84,7 @@
       border-radius: 12px;
       font-family: 'Courier New', monospace;
       font-size: 1.3rem;
-      max-width: 600px;
+      max-width: 700px;
       margin: 2rem auto;
       border-left: 5px solid var(--primary);
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
@@ -150,7 +149,7 @@
     </div>
   </div>
 
-  <!-- 你的圖片區塊（已指向你實際的檔名） -->
+  <!-- 第一張圖：全球地形（你原本的） -->
   <section class="highlight-example">
     <div class="container">
       <h2>只用 3 行就做到這個！</h2>
@@ -168,9 +167,32 @@
         fig.grdimage(grid=grid, projection="R12c")<br>
         fig.show()
       </div>
+    </div>
+  </section>
+
+  <!-- 第二張圖：加等高線 + 色階條（你最新畫的） -->
+  <section class="highlight-example">
+    <div class="container">
+      <h2>再升級：等高線 + 色階條 + Haxby 配色</h2>
+      <p style="font-size:1.4rem; color:var(--primary); max-width:800px; margin:0 auto 2rem;">
+        聚焦中美洲海底地形，展現 PyGMT 的完整實力
+      </p>
+      
+      <img src="./assert/111.png" 
+           alt="PyGMT 海底地形等高線圖" 
+           class="example-image" 
+           loading="lazy">
+
+      <div class="code-block">
+        fig = pygmt.Figure()<br>
+        fig.grdimage(grid=grid, cmap="haxby", projection="M10c", frame=True)<br>
+        fig.grdcontour(grid=grid, annotation=1000, levels=250, limit=[-4000, -2000])<br>
+        fig.colorbar(frame=["x+lelevation", "y+lm"])<br>
+        fig.show()
+      </div>
 
       <p style="color:#ff6b35; font-size:1.3rem;">
-        這就是 PyGMT 的真正實力：簡單、優雅、強大。
+        這才是論文級地圖該有的樣子！
       </p>
     </div>
   </section>
