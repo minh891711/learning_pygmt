@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PyGMT 介紹 | 快速繪圖入門</title>
-  <meta name="description" content="PyGMT 教學：三分鐘用 Python 畫出專業級全球地形圖！"/>
+  <meta name="description" content="PyGMT 教學：用 Python 輕鬆畫出專業級地圖與全球地形熱圖"/>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -57,7 +57,6 @@
       color: transparent;
     }
 
-    /* 新增：超讚範例展示區 */
     .highlight-example {
       background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(255,107,53,0.1));
       padding: 4rem 0;
@@ -92,7 +91,12 @@
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
-    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+    .cards { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+      gap: 2rem; 
+      margin-top: 3rem; 
+    }
     .card {
       background: rgba(255,255,255,0.05);
       border-radius: 15px;
@@ -101,17 +105,10 @@
       border: 1px solid rgba(0,212,255,0.2);
       transition: all 0.3s ease;
     }
-    .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,212,255,0.15); border-color: var(--primary); }
-
-    .code-snippet {
-      background: #1e1e1e;
-      border-radius: 10px;
-      padding: 1.5rem;
-      margin: 1.5rem 0;
-      font-family: 'Courier New', monospace;
-      color: #00ff00;
-      overflow-x: auto;
-      border-left: 4px solid var(--primary);
+    .card:hover { 
+      transform: translateY(-10px); 
+      box-shadow: 0 15px 30px rgba(0,212,255,0.15); 
+      border-color: var(--primary); 
     }
 
     .btn {
@@ -145,17 +142,15 @@
   <div class="hero">
     <div class="container">
       <h1 class="glow-text">PyGMT 快速入門</h1>
-      <p style="text-align:center; font-size:1.6rem; color:#00d4ff; margin:2rem 0;">
-        三行程式碼，畫出專業級全球地形圖
-      </p>
-      <div style="text-align:center;">
+      
+      <div style="text-align:center; margin-top:2rem;">
         <iframe width="100%" height="450" style="max-width:800px; border-radius:15px; box-shadow:0 20px 40px rgba(0,0,0,0.5);" 
                 src="https://www.youtube.com/embed/Kb6TYvZcI_c" title="PyGMT 教學影片" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
   </div>
 
-  <!-- 重磅新增：你提供的超美範例 -->
+  <!-- 你的圖片區塊（已指向你實際的檔名） -->
   <section class="highlight-example">
     <div class="container">
       <h2>只用 3 行就做到這個！</h2>
@@ -163,8 +158,10 @@
         全球地形熱圖（Robinson 投影）・自動上色・無需任何資料下載
       </p>
       
-      <img src="https://i.imgur.com/9zK8oXj.png" alt="PyGMT 全球地形熱圖" class="example-image" 
-           loading="lazy" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGAoQ0a4gAAAABJRU5ErkJggg=='">
+      <img src="./assets/螢幕擷取畫面 2025-11-28 211511.png" 
+           alt="PyGMT 全球地形熱圖" 
+           class="example-image" 
+           loading="lazy">
 
       <div class="code-block">
         fig = pygmt.Figure()<br>
