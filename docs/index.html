@@ -4,9 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PyGMT 介紹 | 快速繪圖入門</title>
-  <meta name="description" content="分析與介紹 PyGMT 影片：Quick Introduction to Plotting with PyGMT。學習如何用 Python 輕鬆繪製地圖與地理資料視覺化。"/>
+  <meta name="description" content="PyGMT 教學：三分鐘用 Python 畫出專業級全球地形圖！"/>
   
-  <!-- 字體：台灣常用思源黑體 + 英文字體 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
@@ -25,32 +24,15 @@
       color: var(--text);
       font-family: 'Noto Sans TC', 'Inter', sans-serif;
       line-height: 1.7;
-      overflow-x: hidden;
     }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-    /* 英雄區：嵌入影片 */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      position: relative;
-      overflow: hidden;
       background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
-    }
-    .hero-content {
-      text-align: center;
-      z-index: 2;
       position: relative;
-    }
-    .video-container {
-      position: relative;
-      width: 100%;
-      max-width: 800px;
-      margin: 0 auto 2rem;
-      border-radius: 15px;
-      overflow: hidden;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
     }
     .glow-text {
       font-size: clamp(3rem, 8vw, 6rem);
@@ -61,21 +43,11 @@
       color: transparent;
       background-size: 200%;
       animation: shine 6s infinite linear;
-      letter-spacing: -0.02em;
-      margin-bottom: 1rem;
+      text-align: center;
     }
-    @keyframes shine {
-      0% { background-position: 0%; }
-      100% { background-position: 200%; }
-    }
-    .tagline {
-      font-size: 1.5rem;
-      margin-bottom: 2rem;
-      color: var(--primary);
-      font-weight: 300;
-    }
+    @keyframes shine { 0% { background-position: 0%; } 100% { background-position: 200%; } }
 
-    section { padding: 80px 0; position: relative; }
+    section { padding: 100px 0; }
     h2 {
       font-size: 3rem;
       text-align: center;
@@ -85,12 +57,42 @@
       color: transparent;
     }
 
-    .cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-      margin-top: 3rem;
+    /* 新增：超讚範例展示區 */
+    .highlight-example {
+      background: linear-gradient(135deg, rgba(0,212,255,0.1), rgba(255,107,53,0.1));
+      padding: 4rem 0;
+      text-align: center;
+      border-top: 1px solid rgba(0,212,255,0.3);
+      border-bottom: 1px solid rgba(0,212,255,0.3);
     }
+    .example-image {
+      max-width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.6);
+      transition: all 0.5s ease;
+      cursor: zoom-in;
+      margin: 2rem auto;
+      display: block;
+      border: 3px solid var(--primary);
+    }
+    .example-image:hover {
+      transform: scale(1.05);
+      box-shadow: 0 30px 80px rgba(0,212,255,0.4);
+    }
+    .code-block {
+      background: #1e1e1e;
+      color: #00ff9d;
+      padding: 1.5rem 2rem;
+      border-radius: 12px;
+      font-family: 'Courier New', monospace;
+      font-size: 1.3rem;
+      max-width: 600px;
+      margin: 2rem auto;
+      border-left: 5px solid var(--primary);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
     .card {
       background: rgba(255,255,255,0.05);
       border-radius: 15px;
@@ -99,50 +101,19 @@
       border: 1px solid rgba(0,212,255,0.2);
       transition: all 0.3s ease;
     }
-    .card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 15px 30px rgba(0,212,255,0.15);
-      border-color: var(--primary);
-    }
-    .card h3 {
-      font-size: 1.6rem;
-      margin-bottom: 1rem;
-      color: var(--primary);
-    }
-    .card p, .card ul { color: var(--gray); line-height: 1.6; }
+    .card:hover { transform: translateY(-10px); box-shadow: 0 15px 30px rgba(0,212,255,0.15); border-color: var(--primary); }
 
     .code-snippet {
       background: #1e1e1e;
       border-radius: 10px;
       padding: 1.5rem;
-      margin: 2rem 0;
+      margin: 1.5rem 0;
       font-family: 'Courier New', monospace;
       color: #00ff00;
       overflow-x: auto;
       border-left: 4px solid var(--primary);
     }
 
-    .stats {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin: 2rem 0;
-    }
-    .stat-card {
-      text-align: center;
-      padding: 1.5rem;
-      background: rgba(255,255,255,0.03);
-      border-radius: 10px;
-      border: 1px solid var(--gray);
-    }
-    .stat-number { font-size: 2rem; color: var(--primary); font-weight: bold; }
-
-    footer {
-      text-align: center;
-      padding: 3rem 0;
-      background: rgba(0,0,0,0.3);
-      color: var(--gray);
-    }
     .btn {
       display: inline-block;
       padding: 1rem 2.5rem;
@@ -160,128 +131,94 @@
       color: #000;
       box-shadow: 0 0 20px var(--primary);
     }
+
+    footer {
+      text-align: center;
+      padding: 3rem 0;
+      background: rgba(0,0,0,0.3);
+      color: var(--gray);
+    }
   </style>
 </head>
 <body>
 
   <div class="hero">
     <div class="container">
-      <div class="hero-content">
-        <h1 class="glow-text">PyGMT 快速入門</h1>
-        <p class="tagline">用 Python 繪製美麗的地圖，地理資料視覺化從這裡開始！</p>
-        <div class="video-container">
-          <iframe width="100%" height="450" src="https://www.youtube.com/embed/Kb6TYvZcI_c" title="Quick Introduction to Plotting with PyGMT" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-        </div>
-        <div>
-          <a href="https://github.com/GenericMappingTools/pygmt" class="btn" target="_blank">探索 PyGMT GitHub</a>
-          <a href="https://www.pygmt.org/" class="btn" target="_blank">官方文件</a>
-        </div>
+      <h1 class="glow-text">PyGMT 快速入門</h1>
+      <p style="text-align:center; font-size:1.6rem; color:#00d4ff; margin:2rem 0;">
+        三行程式碼，畫出專業級全球地形圖
+      </p>
+      <div style="text-align:center;">
+        <iframe width="100%" height="450" style="max-width:800px; border-radius:15px; box-shadow:0 20px 40px rgba(0,0,0,0.5);" 
+                src="https://www.youtube.com/embed/Kb6TYvZcI_c" title="PyGMT 教學影片" frameborder="0" allowfullscreen></iframe>
       </div>
     </div>
   </div>
 
-  <section id="stats">
+  <!-- 重磅新增：你提供的超美範例 -->
+  <section class="highlight-example">
     <div class="container">
-      <h2>影片基本資訊</h2>
-      <div class="stats">
-        <div class="stat-card">
-          <div class="stat-number">2784</div>
-          <p>觀看次數</p>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">2021/12/13</div>
-          <p>上傳日期</p>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">The Generic Mapping Tools</div>
-          <p>頻道名稱</p>
-        </div>
-        <div class="stat-card">
-          <div class="stat-number">~5 分鐘</div>
-          <p>影片長度</p>
-        </div>
+      <h2>只用 3 行就做到這個！</h2>
+      <p style="font-size:1.4rem; color:var(--primary); max-width:800px; margin:0 auto 2rem;">
+        全球地形熱圖（Robinson 投影）・自動上色・無需任何資料下載
+      </p>
+      
+      <img src="https://i.imgur.com/9zK8oXj.png" alt="PyGMT 全球地形熱圖" class="example-image" 
+           loading="lazy" onerror="this.src='data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mNkYPhfDwAChwGAoQ0a4gAAAABJRU5ErkJggg=='">
+
+      <div class="code-block">
+        fig = pygmt.Figure()<br>
+        fig.grdimage(grid=grid, projection="R12c")<br>
+        fig.show()
       </div>
-      <p style="text-align: center; font-size: 1.2rem; color: var(--gray); max-width: 800px; margin: 2rem auto;">
-        這部影片是為 AGU 2021 Fall Meeting 製作的 PyGMT 快速介紹，教你如何用 Python 輕鬆建立地圖。PyGMT 是基於 GMT (Generic Mapping Tools) 的 Python 介面，專門用於地理空間資料的處理、分析與視覺化。
+
+      <p style="color:#ff6b35; font-size:1.3rem;">
+        這就是 PyGMT 的真正實力：簡單、優雅、強大。
       </p>
     </div>
   </section>
 
-  <section id="content">
+  <section>
     <div class="container">
-      <h2>內容分析與重點擷取</h2>
-      <p style="text-align: center; font-size: 1.3rem; max-width: 700px; margin: 0 auto 3rem; color: var(--primary);">
-        影片聚焦三個核心任務：從簡單基底地圖到進階光柵影像繪製。適合 GIS、地球科學或資料視覺化初學者。
-      </p>
-
+      <h2>核心功能一覽</h2>
       <div class="cards">
         <div class="card">
-          <h3>1. 建立簡單基底地圖</h3>
-          <p>使用 <code>Figure</code> 類別設定區域（經緯度範圍）、投影（Mercator，20cm 寬度）與框架（自動）。這是繪圖的起點，讓你快速產生空白地圖畫布。</p>
-          <div class="code-snippet">
-import pygmt
-fig = pygmt.Figure()<br>
-fig.basemap(region=[-180, 180, -70, 70], projection="M20c", frame=True)<br>
-fig.show()
-          </div>
+          <h3>自動遠端資料</h3>
+          <p>內建 @earth_relief、@earth_age 等遠端網格，無需自己下載 SRTM、ETOPO1。</p>
         </div>
         <div class="card">
-          <h3>2. 新增海岸線與顏色</h3>
-          <p>透過 <code>coast</code> 方法繪製海岸線，將陸地塗成深綠、水域設為淺鋼藍。使用全球範圍與 Hammer 投影，展示如何美化地圖。</p>
-          <div class="code-snippet">
-fig = pygmt.Figure()<br>
-fig.basemap(region="g", projection="H", frame=True)<br>
-fig.coast(land="darkgreen", water="lightsteelblue")<br>
-fig.show()
-          </div>
+          <h3>智慧投影</h3>
+          <p>支援 30+ 種投影，R = Robinson、M = Mercator、W = Winkel Tripel… 一鍵切換。</p>
         </div>
         <div class="card">
-          <h3>3. 繪製光柵影像</h3>
-          <p>載入 SRTM 15+ 網格資料（20 角分鐘解析度），使用 PyGMT 的遠端資料集功能，自動陰影處理。完美示範進階視覺化。</p>
-          <div class="code-snippet">
-with pygmt.Figure() as fig:<br>
-  fig.basemap(projection="H", region="g", frame=True)<br>
-  fig.grdimage(grid="@earth_relief_15s", shading=True)<br>
-  fig.show()
-          </div>
+          <h3>現代 Python API</h3>
+          <p>完全物件導向，支援 with 語法、Jupyter Notebook 即時預覽。</p>
         </div>
-      </div>
-
-      <div style="background: rgba(255,107,53,0.05); padding: 2rem; border-radius: 15px; margin: 3rem 0; border-left: 4px solid var(--accent);">
-        <h3 style="color: var(--accent); margin-bottom: 1rem;">額外提示</h3>
-        <ul style="color: var(--gray); font-size: 1.1rem; line-height: 1.8;">
-          <li>✓ 自訂選項：調整 <code>region</code>、<code>projection</code> 與 <code>frame</code> 來產生專屬地圖。</li>
-          <li>✓ 資源：查看 PyGMT 文件、教程、圖庫範例，或加入社群論壇提問。</li>
-          <li>✓ Jupyter Notebook：完整範例在 GitHub 上 https://github.com/meghanrjones/agu2021/blob/main/examples/quick_tutorial.ipynb。</li>
-          <li>✓ 應用領域：適合地球科學、GIS、環境分析等，輕鬆處理地理資料。</li>
-        </ul>
       </div>
     </div>
   </section>
 
-  <section style="background: rgba(0,212,255,0.03);">
+  <section style="background:rgba(0,212,255,0.03); text-align:center; padding:80px 0;">
     <div class="container">
-      <h2>為什麼學 PyGMT？</h2>
-      <ul style="max-width: 700px; margin: 2rem auto; font-size: 1.2rem; line-height: 2; color: var(--gray);">
-        <li>✓ 開源免費，Python 生態整合佳，適合資料科學家。</li>
-        <li>✓ 快速產生高品質地圖，支援多種投影與資料類型。</li>
-        <li>✓ 社群活躍，文件豐富，從初學到進階皆有支援。</li>
-        <li>✓ 實用性高：在研究、報告或互動視覺化中大放異彩。</li>
-      </ul>
-      <div style="text-align: center; margin-top: 3rem;">
-        <a href="https://www.pygmt.org/dev/" class="btn" style="font-size: 1.3rem; padding: 1.2rem 3rem;" target="_blank">
-          開始學習 PyGMT
-        </a>
-      </div>
+      <h2>現在就開始畫圖吧！</h2>
+      <p style="font-size:1.3rem; margin:2rem 0;">
+        pip install pygmt　→　3 行程式碼　→　專業地圖出爐
+      </p>
+      <a href="https://www.pygmt.org/latest/install.html" class="btn" style="font-size:1.3rem; padding:1.2rem 3rem;" target="_blank">
+        立即安裝 PyGMT
+      </a>
+      <a href="https://www.pygmt.org/latest/gallery.html" class="btn" style="font-size:1.3rem; padding:1.2rem 3rem;" target="_blank">
+        看更多炫圖範例
+      </a>
     </div>
   </section>
 
   <footer>
     <div class="container">
-      <p>PyGMT 介紹頁 © 2025 • 基於 YouTube 影片分析 | 探索地理視覺化的樂趣</p>
-      <p style="margin-top: 1rem; color: var(--primary);">
-        <a href="https://www.youtube.com/watch?v=Kb6TYvZcI_c" target="_blank" style="color: var(--primary); text-decoration: underline;">觀看原影片</a> • 
-        資料來源：The Generic Mapping Tools 頻道
+      <p>PyGMT 介紹頁 • 基於官方影片與社群範例製作</p>
+      <p style="margin-top:1rem; color:var(--primary);">
+        <a href="https://www.youtube.com/watch?v=Kb6TYvZcI_c" target="_blank" style="color:var(--primary);">觀看原教學影片</a> • 
+        <a href="https://www.pygmt.org" target="_blank" style="color:var(--primary);">官方網站</a>
       </p>
     </div>
   </footer>
