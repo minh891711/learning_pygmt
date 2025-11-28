@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>pgy.mt | 這不是你想的那個 gym</title>
+  <meta name="description" content="pgy.mt — 可能是全世界最廢卻又最誠實的健身平台。我們不賣雞胸肉，也不賣夢想，只賣真話與迷因。"/>
+  
+  <!-- 字體：台灣常用思源黑體 + 英文字體 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #0f0f1a;
+      --primary: #00f2ff;
+      --accent: #ff2e63;
+      --text: #e0e0ff;
+      --gray: #8892b0;
+    }
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Noto Sans TC', 'Inter', sans-serif;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* 霓虹動態背景 */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(45deg, #1a1a2e, #16213e, #0f0f1a);
+      animation: hue 20s infinite linear;
+      opacity: 0.8;
+    }
+    @keyframes hue {
+      0% { filter: hue-rotate(0deg); }
+      100% { filter: hue-rotate(360deg); }
+    }
+
+    .glow-text {
+      font-size: clamp(4rem, 10vw, 9rem);
+      font-weight: 900;
+      text-align: center;
+      background: linear-gradient(90deg, #00f2ff, #ff2e63, #00f2ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      background-size: 200%;
+      animation: shine 8s infinite linear;
+      letter-spacing: -0.02em;
+      text-shadow: 0 0 40px rgba(0,242,255,0.6);
+    }
+    @keyframes shine {
+      0% { background-position: 0%; }
+      100% { background-position: 200%; }
+    }
+
+    .tagline {
+      text-align: center;
+      font-size: 1.8rem;
+      margin: 2rem 0;
+      color: var(--primary);
+      font-weight: 300;
+    }
+
+    section { padding: 100px 0; position: relative; }
+    h2 {
+      font-size: 3.5rem;
+      text-align: center;
+      margin-bottom: 3rem;
+      background: linear-gradient(to right, var(--primary), #fff);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 4rem;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      padding: 2.5rem;
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(0,242,255,0.2);
+      transition: all 0.4s ease;
+    }
+    .card:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 20px 40px rgba(0,242,255,0.2);
+      border-color: var(--primary);
+    }
+    .card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      color: var(--primary);
+    }
+    .card p { color: var(--gray); }
+
+    .meme {
+      font-size: 4rem;
+      text-align: center;
+      margin: 3rem 0;
+    }
+
+    footer {
+      text-align: center;
+      padding: 4rem 0;
+      background: rgba(0,0,0,0.4);
+      color: var(--gray);
+    }
+    .btn {
+      display: inline-block;
+      padding: 1rem 3rem;
+      background: transparent;
+      color: var(--primary);
+      border: 2px solid var(--primary);
+      border-radius: 50px;
+      font-size: 1.2rem;
+      margin: 2rem;
+      text-decoration: none;
+      transition: all 0.4s;
+    }
+    .btn:hover {
+      background: var(--primary);
+      color: #000;
+      box-shadow: 0 0 30px var(--primary);
+    }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <div class="container" style="z-index:2; position:relative;">
+      <h1 class="glow-text">pgy.mt</h1>
+      <p class="tagline">這不是你想的那個 gym，<br>但絕對是你需要的 gym。</p>
+      <div style="text-align:center; margin-top:4rem;">
+        <a href="#about" class="btn">往下看真心話</a>
+        <a href="https://t.me/pgymt" class="btn" target="_blank">直接進 Telegram 廢物群</a>
+      </div>
+    </div>
+  </div>
+
+  <section id="about">
+    <div class="container">
+      <h2>我們到底是什麼？</h2>
+      <p style="text-align:center; font-size:1.5rem; max-width:800px; margin:0 auto 4rem;">
+        pgy.mt 是一個完全不勵志、極度誠實、充滿迷因的「偽健身社群」。<br>
+        我們不叫你早起床，也不賣你 30 天練出腹肌的夢幻課程。<br>
+        我們只做一件事：陪你一起承認「我就是個廢物」，然後笑著繼續當廢物（偶爾動一下）。
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h3>🏆 核心理念</h3>
+          <p>「運動是為了快樂，不是為了受罪」<br>跑步機上滑手機 30 分鐘也算運動，誰管你。</p>
+        </div>
+        <div class="card">
+          <h3>💀 真心話大冒險</h3>
+          <p>每天打卡發廢照、發體重、發宵夜照，輸的人請全群喝奶茶。我們靠羞辱活下去。</p>
+        </div>
+        <div class="card">
+          <h3>🧠 心理建設</h3>
+          <p>提供專業「自我放棄學」教材，教你如何在放棄與堅持之間取得完美平衡。</p>
+        </div>
+      </div>
+
+      <div class="meme">💪 → 🏃‍♂️ → 🍔 → 😭 → 💪</div>
+      <p style="text-align:center; font-size:1.8rem; color:var(--accent);">
+        這就是我們一輩子的循環，歡迎加入。
+      </p>
+    </div>
+  </section>
+
+  <section style="background:rgba(0,242,255,0.05);">
+    <div class="container">
+      <h2>為什麼你需要 pgy.mt？</h2>
+      <ul style="max-width:700px; margin:3rem auto; font-size:1.4rem; line-height:2.2;">
+        <li>✓ 這裡沒有人會說「你一定可以」，因為我們都知道你不行</li>
+        <li>✓ 每天都有人比你更廢，讓你瞬間充滿優越感</li>
+        <li>✓ 群內迷因產量 > 你的年度運動量</li>
+        <li>✓ 偶爾真的會變瘦（科學無法解釋）</li>
+        <li>✓ 終於有一個地方可以光明正大承認自己是廢物</li>
+      </ul>
+      <div style="text-align:center;">
+        <a href="https://t.me/pgymt" class="btn" style="font-size:2rem; padding:1.5rem 4rem;" target="_blank">
+          立刻加入，開始廢
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>pgy.mt © 2025 • 我們不保證你會變好，但保證你會笑到肚子痛</p>
+      <p style="margin-top:1rem; color:var(--primary);">
+        <a href="https://t.me/pgymt" target="_blank" style="color:var(--primary); text-decoration:underline;">Telegram 頻道</a> • 
+        純粹好玩，禁止認真
+      </p>
+    </div>
+  </footer>
+
+</body>
+</html>
