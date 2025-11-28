@@ -84,10 +84,11 @@
       border-radius: 12px;
       font-family: 'Courier New', monospace;
       font-size: 1.3rem;
-      max-width: 700px;
+      max-width: 800px;
       margin: 2rem auto;
       border-left: 5px solid var(--primary);
       box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      white-space: pre-wrap;
     }
 
     .cards { 
@@ -149,7 +150,7 @@
     </div>
   </div>
 
-  <!-- 第一張圖：全球地形 -->
+  <!-- 第一張：全球地形 -->
   <section class="highlight-example">
     <div class="container">
       <h2>只用 3 行就做到這個！</h2>
@@ -163,14 +164,14 @@
            loading="lazy">
 
       <div class="code-block">
-        fig = pygmt.Figure()<br>
-        fig.grdimage(grid=grid, projection="R12c")<br>
+        fig = pygmt.Figure()
+        fig.grdimage(grid=grid, projection="R12c")
         fig.show()
       </div>
     </div>
   </section>
 
-  <!-- 第二張圖：等高線 + 色階條 -->
+  <!-- 第二張：海底等高線 + 色階條 -->
   <section class="highlight-example">
     <div class="container">
       <h2>再升級：等高線 + 色階條 + Haxby 配色</h2>
@@ -184,10 +185,42 @@
            loading="lazy">
 
       <div class="code-block">
-        fig = pygmt.Figure()<br>
-        fig.grdimage(grid=grid, cmap="haxby", projection="M10c", frame=True)<br>
-        fig.grdcontour(grid=grid, annotation=1000, levels=250, limit=[-4000, -2000])<br>
-        fig.colorbar(frame=["x+lelevation", "y+lm"])<br>
+        fig = pygmt.Figure()
+        fig.grdimage(grid=grid, cmap="haxby", projection="M10c", frame=True)
+        fig.grdcontour(grid=grid, annotation=1000, levels=250, limit=[-4000, -2000])
+        fig.colorbar(frame=["x+lelevation", "y+lm"])
+        fig.show()
+      </div>
+    </div>
+  </section>
+
+  <!-- 第三張：3D 地形視圖（你最新的超帥 3D 圖！） -->
+  <section class="highlight-example">
+    <div class="container">
+      <h2>終極進化：3D 立體地形視圖</h2>
+      <p style="font-size:1.4rem; color:var(--primary); max-width:800px; margin:0 auto 2rem;">
+        使用 grdview + perspective 參數，一鍵生成電影級 3D 地形
+      </p>
+      
+      <img src="./assert/222.png" 
+           alt="PyGMT 3D 地形視圖" 
+           class="example-image" 
+           loading="lazy">
+
+      <div class="code-block">
+        fig = pygmt.Figure()
+        fig.grdview(
+            grid=grid,
+            perspective=[-130, 30],
+            frame=["xaf", "yaf", "WSnE"],
+            projection="M15c",
+            zsize="1.5c",
+            surftype="s",
+            cmap="geo",
+            plane="1000+ggrey",
+            contourpen="0.1p",
+        )
+        fig.colorbar(perspective=True, frame=["a500", "x+lElevation", "y+lm"])
         fig.show()
       </div>
     </div>
@@ -232,7 +265,7 @@
     <div class="container">
       <p>PyGMT 介紹頁 • 基於官方影片與社群範例製作</p>
       <p style="margin-top:1rem; color:var(--primary);">
-        <a href="https://www.youtube.com/watch?v=Kb6TYvZcI_c" target="_blank" style="color:var(--primary);">觀看原教學影片</a> • 
+        <a href="https://www.youtube.com/watch  target="_blank" style="color:var(--primary);">觀看原教學影片</a> • 
         <a href="https://www.pygmt.org" target="_blank" style="color:var(--primary);">官方網站</a>
       </p>
     </div>
