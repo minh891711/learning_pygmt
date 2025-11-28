@@ -7,60 +7,192 @@
   <meta name="description" content="PyGMT 教學：用 Python 輕鬆畫出專業級地圖"/>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="preconnect href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;600&family=Inter:wght@400;600&display=swap" rel="stylesheet">
   
   <style>
-    :root {--bg:#0a0a0a;--primary:#00d4ff;--accent:#ff6b35;--text:#e0e0e0;--gray:#aaaaaa;}
+    :root{
+      --bg:#0d0d0d;
+      --primary:#00d4ff;
+      --accent:#ff6b35;
+      --text:#d0d0d0;
+      --gray:#999;
+    }
     *{margin:0;padding:0;box-sizing:border-box;}
-    body{background:var(--bg);color:var(--text);font-family:'Noto Sans TC','Inter',sans-serif;line-height:1.8;}
-    .container{max-width:1100px;margin:0 auto;padding:0 20px;}
+    body{
+      background:var(--bg);
+      color:var(--text);
+      font-family:'Noto Sans TC','Inter',sans-serif;
+      line-height:1.75;
+      font-size:16px; /* 整體字體縮小 */
+    }
+    .container{max-width:1000px;margin:0 auto;padding:0 20px;} /* 內容不要太寬 */
 
-    .hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;background:linear-gradient(135deg,#0a0a0a,#1a1a2e);}
-    .glow-text{font-size:clamp(3rem,8vw,6.5rem);font-weight:700;background:linear-gradient(90deg,#00d4ff,#ff6b35,#00d4ff);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200%;animation:shine 7s infinite linear;text-align:center;}
+    /* ─── 固定頂部導覽列 ─── */
+    nav{
+      position:fixed;
+      top:0;
+      left:0;
+      width:100%;
+      background:rgba(10,10,10,0.95);
+      backdrop-filter:blur(10px);
+      border-bottom:1px solid rgba(0,212,255,0.3);
+      z-index:1000;
+      padding:12px 0;
+    }
+    nav ul{
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:2rem;
+      list-style:none;
+      font-size:1rem;
+    }
+    nav a{
+      color:var(--text);
+      text-decoration:none;
+      padding:6px 12px;
+      border-radius:6px;
+      transition:.3s;
+    }
+    nav a:hover{
+      background:rgba(0,212,255,0.2);
+      color:var(--primary);
+    }
+
+    /* 讓內容不要被導覽列蓋到 */
+    body{ padding-top:70px; }
+
+    .hero{
+      min-height:90vh;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      background:linear-gradient(135deg,#0a0a0a,#1a1a2e);
+      text-align:center;
+      padding:2rem 0;
+    }
+    .glow-text{
+      font-size:clamp(2.8rem,7vw,5rem);
+      font-weight:700;
+      background:linear-gradient(90deg,#00d4ff,#ff6b35,#00d4ff);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      background-size:200%;
+      animation:shine 8s infinite linear;
+      margin-bottom:1rem;
+    }
     @keyframes shine{0%{background-position:0%}100%{background-position:200%}}
 
     .intro-box{
-      background:rgba(255,255,255,0.06);
-      backdrop-filter:blur(12px);
-      border:1px solid rgba(0,212,255,0.3);
-      border-radius:20px;
-      padding:2.5rem 3rem;
-      margin:3rem auto;
-      max-width:900px;
-      font-size:1.15rem;
-      line-height:2;
-      box-shadow:0 15px 40px rgba(0,0,0,0.5);
+      background:rgba(255,255,255,0.07);
+      border-radius:16px;
+      padding:2rem 2.5rem;
+      margin:2.5rem auto;
+      max-width:860px;
+      font-size:1.05rem;
+      border:1px solid rgba(0,212,255,0.25);
     }
-    .intro-box ul{margin:1.5rem 0 0 2rem;}
-    .intro-box li{margin:0.8rem 0;}
+    .intro-box ul{margin:1.2rem 0 0 1.8rem;}
+    .intro-box li{margin:0.6rem 0;}
 
-    section{padding:100px 0;}
-    h2{font-size:2.8rem;text-align:center;margin-bottom:3rem;background:linear-gradient(to right,var(--primary),#fff);-webkit-background-clip:text;color:transparent;}
+    section{padding:80px 0;} /* 區塊間距縮小 */
+    h2{
+      font-size:2.2rem;   /* 標題縮小 */
+      text-align:center;
+      margin-bottom:2.5rem;
+      background:linear-gradient(to right,var(--primary),#fff);
+      -webkit-background-clip:text;
+      color:transparent;
+    }
 
-    .highlight-example{background:linear-gradient(135deg,rgba(0,212,255,0.1),rgba(255,107,53,0.1));padding:4.5rem 0;text-align:center;border-top:1px solid rgba(0,212,255,0.3);border-bottom:1px solid rgba(0,212,255,0.3);}
-    .example-image{max-width:100%;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,0.6);transition:.5s;margin:2rem auto;display:block;border:3px solid var(--primary);}
-    .example-image:hover{transform:scale(1.05);box-shadow:0 30px 80px rgba(0,212,255,0.4);}
-    .code-block{background:#1e1e1e;color:#00ff9d;padding:1.8rem 2rem;border-radius:12px;font-family:'Courier New',monospace;font-size:1.22rem;max-width:860px;margin:2rem auto;border-left:5px solid var(--primary);box-shadow:0 10px 30px rgba(0,0,0,0.5);white-space:pre-wrap;overflow-x:auto;}
+    .highlight-example{
+      background:linear-gradient(135deg,rgba(0,212,255,0.08),rgba(255,107,53,0.08));
+      padding:3.5rem 0;
+      text-align:center;
+    }
+    .example-image{
+      max-width:90%;           /* 圖片不再滿版 */
+      max-height:700px;
+      border-radius:16px;
+      box-shadow:0 15px 40px rgba(0,0,0,0.6);
+      border:2px solid var(--primary);
+      margin:2rem auto;
+      display:block;
+    }
+    .example-image:hover{transform:scale(1.03);}
 
-    .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:2rem;margin-top:3rem;}
-    .card{background:rgba(255,255,255,0.05);border-radius:15px;padding:2rem;backdrop-filter:blur(10px);border:1px solid rgba(0,212,255,0.2);transition:.3s;}
-    .card:hover{transform:translateY(-10px);box-shadow:0 15px 30px rgba(0,212,255,0.15);border-color:var(--primary);}
+    .code-block{
+      background:#1a1a1a;
+      color:#00ff9d;
+      padding:1.4rem 1.8rem;
+      border-radius:10px;
+      font-size:1.05rem;
+      max-width:800px;
+      margin:2rem auto;
+      border-left:4px solid var(--primary);
+      white-space:pre-wrap;
+      overflow-x:auto;
+    }
 
-    .btn{display:inline-block;padding:1rem 2.8rem;background:transparent;color:var(--primary);border:2px solid var(--primary);border-radius:30px;font-size:1.2rem;margin:1rem;text-decoration:none;transition:.3s;}
-    .btn:hover{background:var(--primary);color:#000;box-shadow:0 0 25px var(--primary);}
+    .cards{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+      gap:1.8rem;
+      margin-top:2rem;
+    }
+    .card{
+      background:rgba(255,255,255,0.04);
+      border-radius:12px;
+      padding:1.8rem;
+      border:1px solid rgba(0,212,255,0.15);
+      transition:.3s;
+    }
+    .card:hover{transform:translateY(-6px);border-color:var(--primary);}
 
-    footer{text-align:center;padding:3rem 0;background:rgba(0,0,0,0.4);color:var(--gray);}
+    .btn{
+      display:inline-block;
+      padding:0.9rem 2.2rem;
+      background:transparent;
+      color:var(--primary);
+      border:2px solid var(--primary);
+      border-radius:30px;
+      text-decoration:none;
+      transition:.3s;
+      margin:0.8rem;
+    }
+    .btn:hover{background:var(--primary);color:#000;}
+
+    footer{
+      text-align:center;
+      padding:2.5rem 0;
+      background:rgba(0,0,0,0.5);
+      font-size:0.95rem;
+      color:var(--gray);
+    }
   </style>
 </head>
 <body>
 
+  <!-- 固定頂部導覽列 -->
+  <nav>
+    <ul>
+      <li><a href="#intro">PyGMT 介紹</a></li>
+      <li><a href="#ex1">全球地形</a></li>
+      <li><a href="#ex2">海底等高線</a></li>
+      <li><a href="#ex3">3D 地形</a></li>
+      <li><a href="#ex4">海岸線＋小地圖</a></li>
+      <li><a href="#install">安裝與範例</a></li>
+    </ul>
+  </nav>
+
+  <!-- 首頁大標題 + 介紹文字 + 影片 -->
   <div class="hero">
     <div class="container">
       <h1 class="glow-text">PyGMT 快速入門</h1>
 
-      <!-- 新增：PyGMT 專業介紹文字（放在影片前面） -->
-      <div class="intro-box">
+      <div id="intro" class="intro-box">
         <p><strong>PyGMT</strong> 就是把功能強大的 GMT（Generic Mapping Tools）完整用 Python 重新包裝，讓你可以用最熟悉的 Python 語法呼叫所有 GMT 指令。</p>
         <p>除了讓 Python 使用者能快速上手專業製圖之外，PyGMT 最終目標是與 NumPy、Pandas、Xarray 等科學運算生態無縫整合，在 Jupyter Notebook 中實現「資料分析 → 即時互動繪圖」一條龍。</p>
         <p>如果你有以下任一需求，強烈建議立即試用 PyGMT：</p>
@@ -69,22 +201,19 @@
           <li>常畫地圖，卻覺得傳統 GIS 軟體太慢、太繁瑣</li>
           <li>希望把資料分析與繪圖一次搞定，直接在 Jupyter 裡即時調整參數</li>
         </ul>
-        <p style="margin-top:1.5rem;color:var(--primary);font-weight:700;">一句話總結：用 Python 的語法，畫出論文級的地圖，就是 PyGMT。</p>
+        <p style="margin-top:1.5rem;color:var(--primary);font-weight:600;">一句話總結：用 Python 的語法，畫出論文級的地圖，就是 PyGMT。</p>
       </div>
 
-      <!-- 原教學影片 -->
-      <div style="text-align:center;">
-        <iframe width="100%" height="500" style="max-width:900px;border-radius:20px;box-shadow:0 20px 50px rgba(0,0,0,0.6);" 
-                src="https://www.youtube.com/embed/Kb6TYvZcI_c" title="PyGMT 官方入門影片" frameborder="0" allowfullscreen></iframe>
-      </div>
+      <iframe width="100%" height="500" style="max-width:860px;border-radius:16px;box-shadow:0 20px 50px rgba(0,0,0,0.6);" 
+              src="https://www.youtube.com/embed/Kb6TYvZcI_c" title="PyGMT 官方入門影片" frameborder="0" allowfullscreen></iframe>
     </div>
   </div>
 
-  <!-- 範例 1：全球地形熱圖 -->
-  <section class="highlight-example">
+  <!-- 範例 1 -->
+  <section id="ex1" class="highlight-example">
     <div class="container">
       <h2>全球地形熱圖（Robinson 投影）</h2>
-      <p style="font-size:1.4rem;color:var(--primary);max-width:800px;margin:0 auto 2rem;">三行程式碼，無需下載資料，即可繪製專業級全球地形</p>
+      <p style="font-size:1.25rem;color:var(--primary);max-width:800px;margin:0 auto 1.8rem;">三行程式碼，無需下載資料，即可繪製專業級全球地形</p>
       <img src="./assert/螢幕擷取畫面 2025-11-28 211511.png" alt="全球地形" class="example-image" loading="lazy">
       <div class="code-block">fig = pygmt.Figure()
 fig.grdimage(grid=grid, projection="R12c")
@@ -92,11 +221,11 @@ fig.show()</div>
     </div>
   </section>
 
-  <!-- 範例 2：海底等高線圖 -->
-  <section class="highlight-example">
+  <!-- 範例 2 -->
+  <section id="ex2" class="highlight-example">
     <div class="container">
       <h2>海底地形 + 等高線 + 色階條</h2>
-      <p style="font-size:1.4rem;color:var(--primary);max-width:800px;margin:0 auto 2rem;">haxby 配色 + grdcontour，輕鬆做出論文級海底地形圖</p>
+      <p style="font-size:1.25rem;color:var(--primary);max-width:800px;margin:0 auto 1.8rem;">haxby 配色 + grdcontour，輕鬆做出論文級海底地形圖</p>
       <img src="./assert/111.png" alt="海底等高線" class="example-image" loading="lazy">
       <div class="code-block">fig = pygmt.Figure()
 fig.grdimage(grid=grid, cmap="haxby", projection="M10c", frame=True)
@@ -106,11 +235,11 @@ fig.show()</div>
     </div>
   </section>
 
-  <!-- 範例 3：3D 立體地形 -->
-  <section class="highlight-example">
+  <!-- 範例 3 -->
+  <section id="ex3" class="highlight-example">
     <div class="container">
       <h2>3D 立體地形視圖</h2>
-      <p style="font-size:1.4rem;color:var(--primary);max-width:800px;margin:0 auto 2rem;">grdview + perspective 一鍵生成電影級 3D 地形</p>
+      <p style="font-size:1.25rem;color:var(--primary);max-width:800px;margin:0 auto 1.8rem;">grdview + perspective 一鍵生成電影級 3D 地形</p>
       <img src="./assert/222.png" alt="3D 地形" class="example-image" loading="lazy">
       <div class="code-block">fig = pygmt.Figure()
 fig.grdview(
@@ -129,11 +258,11 @@ fig.show()</div>
     </div>
   </section>
 
-  <!-- 範例 4：海岸線 + 嵌入小地圖 -->
-  <section class="highlight-example">
+  <!-- 範例 4 -->
+  <section id="ex4" class="highlight-example">
     <div class="container">
       <h2>海岸線地圖 + 嵌入小地圖（Inset）</h2>
-      <p style="font-size:1.4rem;color:var(--primary);max-width:800px;margin:0 auto 2rem;">fig.coast 結合 fig.inset，輕鬆做出帶定位框的區域地圖</p>
+      <p style="font-size:1.25rem;color:var(--primary);max-width:800px;margin:0 auto 1.8rem;">fig.coast 結合 fig.inset，輕鬆做出帶定位框的區域地圖</p>
       <img src="./assert/333.png" alt="海岸線與小地圖" class="example-image" loading="lazy">
       <div class="code-block">fig = pygmt.Figure()
 fig.coast(
@@ -162,23 +291,11 @@ fig.show()</div>
     </div>
   </section>
 
-  <!-- 核心功能卡片 -->
-  <section>
-    <div class="container">
-      <h2>核心優勢</h2>
-      <div class="cards">
-        <div class="card"><h3>自動遠端資料</h3><p>內建 @earth_relief 等遠端網格，無需手動下載</p></div>
-        <div class="card"><h3>30+ 種投影</h3><p>一鍵切換 Robinson、Mercator、Orthographic…</p></div>
-        <div class="card"><h3>完美支援 Jupyter</h3><p>在 Notebook 裡即時調整參數，互動繪圖超順手</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 呼籲行動 -->
-  <section style="background:rgba(0,212,255,0.03);text-align:center;padding:90px 0;">
+  <!-- 安裝區塊 -->
+  <section id="install" style="background:rgba(0,212,255,0.03);text-align:center;padding:90px 0;">
     <div class="container">
       <h2>現在就開始用 PyGMT 畫圖吧！</h2>
-      <p style="font-size:1.4rem;margin:2.5rem 0;">
+      <p style="font-size:1.35rem;margin:2rem 0;">
         pip install pygmt　→　幾行程式碼　→　論文級地圖
       </p>
       <a href="https://www.pygmt.org/latest/install.html" class="btn" target="_blank">立即安裝 PyGMT</a>
