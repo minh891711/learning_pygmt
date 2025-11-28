@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>pgy.mt | 這不是你想的那個 gym</title>
-  <meta name="description" content="pgy.mt — 可能是全世界最廢卻又最誠實的健身平台。我們不賣雞胸肉，也不賣夢想，只賣真話與迷因。"/>
+  <title>PyGMT 介紹 | 快速繪圖入門</title>
+  <meta name="description" content="分析與介紹 PyGMT 影片：Quick Introduction to Plotting with PyGMT。學習如何用 Python 輕鬆繪製地圖與地理資料視覺化。"/>
   
   <!-- 字體：台灣常用思源黑體 + 英文字體 -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,11 +13,11 @@
   
   <style>
     :root {
-      --bg: #0f0f1a;
-      --primary: #00f2ff;
-      --accent: #ff2e63;
-      --text: #e0e0ff;
-      --gray: #8892b0;
+      --bg: #0a0a0a;
+      --primary: #00d4ff;
+      --accent: #ff6b35;
+      --text: #e0e0e0;
+      --gray: #8a8a8a;
     }
     * { margin:0; padding:0; box-sizing:border-box; }
     body {
@@ -29,56 +29,55 @@
     }
     .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
 
-    /* 霓虹動態背景 */
+    /* 英雄區：嵌入影片 */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
       position: relative;
       overflow: hidden;
+      background: linear-gradient(135deg, #0a0a0a, #1a1a2e);
     }
-    .hero::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(45deg, #1a1a2e, #16213e, #0f0f1a);
-      animation: hue 20s infinite linear;
-      opacity: 0.8;
-    }
-    @keyframes hue {
-      0% { filter: hue-rotate(0deg); }
-      100% { filter: hue-rotate(360deg); }
-    }
-
-    .glow-text {
-      font-size: clamp(4rem, 10vw, 9rem);
-      font-weight: 900;
+    .hero-content {
       text-align: center;
-      background: linear-gradient(90deg, #00f2ff, #ff2e63, #00f2ff);
+      z-index: 2;
+      position: relative;
+    }
+    .video-container {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto 2rem;
+      border-radius: 15px;
+      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
+    }
+    .glow-text {
+      font-size: clamp(3rem, 8vw, 6rem);
+      font-weight: 700;
+      background: linear-gradient(90deg, #00d4ff, #ff6b35, #00d4ff);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       background-size: 200%;
-      animation: shine 8s infinite linear;
+      animation: shine 6s infinite linear;
       letter-spacing: -0.02em;
-      text-shadow: 0 0 40px rgba(0,242,255,0.6);
+      margin-bottom: 1rem;
     }
     @keyframes shine {
       0% { background-position: 0%; }
       100% { background-position: 200%; }
     }
-
     .tagline {
-      text-align: center;
-      font-size: 1.8rem;
-      margin: 2rem 0;
+      font-size: 1.5rem;
+      margin-bottom: 2rem;
       color: var(--primary);
       font-weight: 300;
     }
 
-    section { padding: 100px 0; position: relative; }
+    section { padding: 80px 0; position: relative; }
     h2 {
-      font-size: 3.5rem;
+      font-size: 3rem;
       text-align: center;
       margin-bottom: 3rem;
       background: linear-gradient(to right, var(--primary), #fff);
@@ -90,116 +89,188 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
       gap: 2rem;
-      margin-top: 4rem;
+      margin-top: 3rem;
     }
     .card {
       background: rgba(255,255,255,0.05);
-      border-radius: 20px;
-      padding: 2.5rem;
+      border-radius: 15px;
+      padding: 2rem;
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(0,242,255,0.2);
-      transition: all 0.4s ease;
+      border: 1px solid rgba(0,212,255,0.2);
+      transition: all 0.3s ease;
     }
     .card:hover {
-      transform: translateY(-15px);
-      box-shadow: 0 20px 40px rgba(0,242,255,0.2);
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0,212,255,0.15);
       border-color: var(--primary);
     }
     .card h3 {
-      font-size: 1.8rem;
+      font-size: 1.6rem;
       margin-bottom: 1rem;
       color: var(--primary);
     }
-    .card p { color: var(--gray); }
+    .card p, .card ul { color: var(--gray); line-height: 1.6; }
 
-    .meme {
-      font-size: 4rem;
-      text-align: center;
-      margin: 3rem 0;
+    .code-snippet {
+      background: #1e1e1e;
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 2rem 0;
+      font-family: 'Courier New', monospace;
+      color: #00ff00;
+      overflow-x: auto;
+      border-left: 4px solid var(--primary);
     }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+    .stat-card {
+      text-align: center;
+      padding: 1.5rem;
+      background: rgba(255,255,255,0.03);
+      border-radius: 10px;
+      border: 1px solid var(--gray);
+    }
+    .stat-number { font-size: 2rem; color: var(--primary); font-weight: bold; }
 
     footer {
       text-align: center;
-      padding: 4rem 0;
-      background: rgba(0,0,0,0.4);
+      padding: 3rem 0;
+      background: rgba(0,0,0,0.3);
       color: var(--gray);
     }
     .btn {
       display: inline-block;
-      padding: 1rem 3rem;
+      padding: 1rem 2.5rem;
       background: transparent;
       color: var(--primary);
       border: 2px solid var(--primary);
-      border-radius: 50px;
-      font-size: 1.2rem;
-      margin: 2rem;
+      border-radius: 30px;
+      font-size: 1.1rem;
+      margin: 1rem;
       text-decoration: none;
-      transition: all 0.4s;
+      transition: all 0.3s;
     }
     .btn:hover {
       background: var(--primary);
       color: #000;
-      box-shadow: 0 0 30px var(--primary);
+      box-shadow: 0 0 20px var(--primary);
     }
   </style>
 </head>
 <body>
 
   <div class="hero">
-    <div class="container" style="z-index:2; position:relative;">
-      <h1 class="glow-text">pgy.mt</h1>
-      <p class="tagline">這不是你想的那個 gym，<br>但絕對是你需要的 gym。</p>
-      <div style="text-align:center; margin-top:4rem;">
-        <a href="#about" class="btn">往下看真心話</a>
-        <a href="https://t.me/pgymt" class="btn" target="_blank">直接進 Telegram 廢物群</a>
+    <div class="container">
+      <div class="hero-content">
+        <h1 class="glow-text">PyGMT 快速入門</h1>
+        <p class="tagline">用 Python 繪製美麗的地圖，地理資料視覺化從這裡開始！</p>
+        <div class="video-container">
+          <iframe width="100%" height="450" src="https://www.youtube.com/embed/Kb6TYvZcI_c" title="Quick Introduction to Plotting with PyGMT" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <div>
+          <a href="https://github.com/GenericMappingTools/pygmt" class="btn" target="_blank">探索 PyGMT GitHub</a>
+          <a href="https://www.pygmt.org/" class="btn" target="_blank">官方文件</a>
+        </div>
       </div>
     </div>
   </div>
 
-  <section id="about">
+  <section id="stats">
     <div class="container">
-      <h2>我們到底是什麼？</h2>
-      <p style="text-align:center; font-size:1.5rem; max-width:800px; margin:0 auto 4rem;">
-        pgy.mt 是一個完全不勵志、極度誠實、充滿迷因的「偽健身社群」。<br>
-        我們不叫你早起床，也不賣你 30 天練出腹肌的夢幻課程。<br>
-        我們只做一件事：陪你一起承認「我就是個廢物」，然後笑著繼續當廢物（偶爾動一下）。
-      </p>
-
-      <div class="cards">
-        <div class="card">
-          <h3>🏆 核心理念</h3>
-          <p>「運動是為了快樂，不是為了受罪」<br>跑步機上滑手機 30 分鐘也算運動，誰管你。</p>
+      <h2>影片基本資訊</h2>
+      <div class="stats">
+        <div class="stat-card">
+          <div class="stat-number">2784</div>
+          <p>觀看次數</p>
         </div>
-        <div class="card">
-          <h3>💀 真心話大冒險</h3>
-          <p>每天打卡發廢照、發體重、發宵夜照，輸的人請全群喝奶茶。我們靠羞辱活下去。</p>
+        <div class="stat-card">
+          <div class="stat-number">2021/12/13</div>
+          <p>上傳日期</p>
         </div>
-        <div class="card">
-          <h3>🧠 心理建設</h3>
-          <p>提供專業「自我放棄學」教材，教你如何在放棄與堅持之間取得完美平衡。</p>
+        <div class="stat-card">
+          <div class="stat-number">The Generic Mapping Tools</div>
+          <p>頻道名稱</p>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number">~5 分鐘</div>
+          <p>影片長度</p>
         </div>
       </div>
-
-      <div class="meme">💪 → 🏃‍♂️ → 🍔 → 😭 → 💪</div>
-      <p style="text-align:center; font-size:1.8rem; color:var(--accent);">
-        這就是我們一輩子的循環，歡迎加入。
+      <p style="text-align: center; font-size: 1.2rem; color: var(--gray); max-width: 800px; margin: 2rem auto;">
+        這部影片是為 AGU 2021 Fall Meeting 製作的 PyGMT 快速介紹，教你如何用 Python 輕鬆建立地圖。PyGMT 是基於 GMT (Generic Mapping Tools) 的 Python 介面，專門用於地理空間資料的處理、分析與視覺化。
       </p>
     </div>
   </section>
 
-  <section style="background:rgba(0,242,255,0.05);">
+  <section id="content">
     <div class="container">
-      <h2>為什麼你需要 pgy.mt？</h2>
-      <ul style="max-width:700px; margin:3rem auto; font-size:1.4rem; line-height:2.2;">
-        <li>✓ 這裡沒有人會說「你一定可以」，因為我們都知道你不行</li>
-        <li>✓ 每天都有人比你更廢，讓你瞬間充滿優越感</li>
-        <li>✓ 群內迷因產量 > 你的年度運動量</li>
-        <li>✓ 偶爾真的會變瘦（科學無法解釋）</li>
-        <li>✓ 終於有一個地方可以光明正大承認自己是廢物</li>
+      <h2>內容分析與重點擷取</h2>
+      <p style="text-align: center; font-size: 1.3rem; max-width: 700px; margin: 0 auto 3rem; color: var(--primary);">
+        影片聚焦三個核心任務：從簡單基底地圖到進階光柵影像繪製。適合 GIS、地球科學或資料視覺化初學者。
+      </p>
+
+      <div class="cards">
+        <div class="card">
+          <h3>1. 建立簡單基底地圖</h3>
+          <p>使用 <code>Figure</code> 類別設定區域（經緯度範圍）、投影（Mercator，20cm 寬度）與框架（自動）。這是繪圖的起點，讓你快速產生空白地圖畫布。</p>
+          <div class="code-snippet">
+import pygmt
+fig = pygmt.Figure()<br>
+fig.basemap(region=[-180, 180, -70, 70], projection="M20c", frame=True)<br>
+fig.show()
+          </div>
+        </div>
+        <div class="card">
+          <h3>2. 新增海岸線與顏色</h3>
+          <p>透過 <code>coast</code> 方法繪製海岸線，將陸地塗成深綠、水域設為淺鋼藍。使用全球範圍與 Hammer 投影，展示如何美化地圖。</p>
+          <div class="code-snippet">
+fig = pygmt.Figure()<br>
+fig.basemap(region="g", projection="H", frame=True)<br>
+fig.coast(land="darkgreen", water="lightsteelblue")<br>
+fig.show()
+          </div>
+        </div>
+        <div class="card">
+          <h3>3. 繪製光柵影像</h3>
+          <p>載入 SRTM 15+ 網格資料（20 角分鐘解析度），使用 PyGMT 的遠端資料集功能，自動陰影處理。完美示範進階視覺化。</p>
+          <div class="code-snippet">
+with pygmt.Figure() as fig:<br>
+  fig.basemap(projection="H", region="g", frame=True)<br>
+  fig.grdimage(grid="@earth_relief_15s", shading=True)<br>
+  fig.show()
+          </div>
+        </div>
+      </div>
+
+      <div style="background: rgba(255,107,53,0.05); padding: 2rem; border-radius: 15px; margin: 3rem 0; border-left: 4px solid var(--accent);">
+        <h3 style="color: var(--accent); margin-bottom: 1rem;">額外提示</h3>
+        <ul style="color: var(--gray); font-size: 1.1rem; line-height: 1.8;">
+          <li>✓ 自訂選項：調整 <code>region</code>、<code>projection</code> 與 <code>frame</code> 來產生專屬地圖。</li>
+          <li>✓ 資源：查看 PyGMT 文件、教程、圖庫範例，或加入社群論壇提問。</li>
+          <li>✓ Jupyter Notebook：完整範例在 GitHub 上 https://github.com/meghanrjones/agu2021/blob/main/examples/quick_tutorial.ipynb。</li>
+          <li>✓ 應用領域：適合地球科學、GIS、環境分析等，輕鬆處理地理資料。</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section style="background: rgba(0,212,255,0.03);">
+    <div class="container">
+      <h2>為什麼學 PyGMT？</h2>
+      <ul style="max-width: 700px; margin: 2rem auto; font-size: 1.2rem; line-height: 2; color: var(--gray);">
+        <li>✓ 開源免費，Python 生態整合佳，適合資料科學家。</li>
+        <li>✓ 快速產生高品質地圖，支援多種投影與資料類型。</li>
+        <li>✓ 社群活躍，文件豐富，從初學到進階皆有支援。</li>
+        <li>✓ 實用性高：在研究、報告或互動視覺化中大放異彩。</li>
       </ul>
-      <div style="text-align:center;">
-        <a href="https://t.me/pgymt" class="btn" style="font-size:2rem; padding:1.5rem 4rem;" target="_blank">
-          立刻加入，開始廢
+      <div style="text-align: center; margin-top: 3rem;">
+        <a href="https://www.pygmt.org/dev/" class="btn" style="font-size: 1.3rem; padding: 1.2rem 3rem;" target="_blank">
+          開始學習 PyGMT
         </a>
       </div>
     </div>
@@ -207,10 +278,10 @@
 
   <footer>
     <div class="container">
-      <p>pgy.mt © 2025 • 我們不保證你會變好，但保證你會笑到肚子痛</p>
-      <p style="margin-top:1rem; color:var(--primary);">
-        <a href="https://t.me/pgymt" target="_blank" style="color:var(--primary); text-decoration:underline;">Telegram 頻道</a> • 
-        純粹好玩，禁止認真
+      <p>PyGMT 介紹頁 © 2025 • 基於 YouTube 影片分析 | 探索地理視覺化的樂趣</p>
+      <p style="margin-top: 1rem; color: var(--primary);">
+        <a href="https://www.youtube.com/watch?v=Kb6TYvZcI_c" target="_blank" style="color: var(--primary); text-decoration: underline;">觀看原影片</a> • 
+        資料來源：The Generic Mapping Tools 頻道
       </p>
     </div>
   </footer>
